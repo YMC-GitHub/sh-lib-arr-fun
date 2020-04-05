@@ -1072,7 +1072,7 @@ local q=
 local start=
 local end=
 arr=("\${$arr_name[@]}")
-arr=()
+#arr=()
 $arr_name2=\${$arr_name2:-\$arr}
 len=\${#$arr_name[@]}
 start=$s
@@ -1107,6 +1107,80 @@ EOF
 }
 ## fun usage
 # arr_slice "" "1" "5"
+
+
+###
+# 名字: arr_get
+# 参数：数组名字，元素索引
+# 返回：索引元素
+# 描述：读取数组-返回索引元素
+###
+function arr_get() {
+  local arr_name=
+  local shCode=
+  local arr_index=
+  arr_name="a85da6"
+  [ -n "$1" ] && arr_name="$1"
+  [ -n "$2" ] && arr_index="$2"
+
+  shCode=$(
+    cat <<EOF
+local arr=
+local len=
+local last=
+local last_index=
+local size=
+  len=\${#$arr_name[@]}
+  arr_index=$arr_index
+  if [ -z \$arr_index ] ; then
+    last_index=\$((\$len - 1))
+    else
+    last_index=\$arr_index
+  fi
+  last=\${$arr_name[\$last_index]}
+  if [ \$len -gt 0 ] ;then
+      echo "\$last"
+    else
+      echo ""
+  fi
+EOF
+  )
+  #echo "$shCode"
+  eval "$shCode"
+}
+
+
+###
+# 名字: arr_get_last
+# 参数：数组名字
+# 返回：尾部元素
+# 描述：读取数组-返回尾部元素
+###
+function arr_get_last() {
+  local arr_name=
+  local shCode=
+  arr_name="a85da6"
+  [ -n "$1" ] && arr_name="$1"
+  shCode=$(
+    cat <<EOF
+local arr=
+local len=
+local last=
+local index=
+  len=\${#$arr_name[@]}
+  index=\$((\$len - 1))
+  last=\${$arr_name[\$index]}
+  if [ \$len -gt 0 ] ;then
+      echo "\$last"
+    else
+      echo ""
+  fi
+EOF
+  )
+  #echo "$shCode"
+  eval "$shCode"
+}
+
 
 # file usage
 # ./src/sh-lib-arr.sh
