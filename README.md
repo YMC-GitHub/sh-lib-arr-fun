@@ -35,6 +35,9 @@ some function for handle arr for ymc shell lib
 - [ ] arr_entries
 - [ ] arr_reduce
 - [ ] arr_reduceRight
+- [x] arr_get
+- [x] arr_get_last
+- [ ] arr_get_value_by_key
 
 ## how to use for poduction?
 
